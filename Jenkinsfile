@@ -7,6 +7,7 @@ node {
             ],
             causeString: 'Triggered on $ref',
 
+            token: '',
             tokenCredentialId: 'Token_Webhook',
 
             printContributedVariables: true,
