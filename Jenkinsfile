@@ -46,7 +46,7 @@ pipeline {
             }
             
             stage('Deploy') {
-                enviroment {
+                environment {
                     tag_version = "${env.BUILD_ID}"
                 }
                 steps {
