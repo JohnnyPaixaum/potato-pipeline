@@ -7,6 +7,8 @@ node {
             ],
             causeString: 'Triggered on $ref',
 
+            tokenCredentialId: 'Token_Webhook',
+
             printContributedVariables: true,
             printPostContent: true,
 
@@ -60,7 +62,6 @@ pipeline {
                 }
             }
 
-            /*
             stage('DETECT SOURCE BRANCH ') {
                 steps {
                     script {
@@ -74,6 +75,6 @@ pipeline {
                     }           
                 }
             }
-            */
+        
     }
 }
