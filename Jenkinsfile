@@ -22,13 +22,12 @@ node {
 pipeline {
     agent any
     stages {
-            stage('Docker') {
+            stage('Tests Docker') {
                 steps {
                     script {
-                        sh 'echo "Test Dockerd connection"'
+                        sh 'echo "Test Image Pull"'
+                        Image.pull(nginx:1.24)
                     }
-                Image.id
-                Container.id
                 }
             }
             stage('Kubernetes') {
