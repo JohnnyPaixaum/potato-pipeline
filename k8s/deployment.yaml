@@ -1,11 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: potato-app
   namespace: default
 spec:
-  imagePullSecrets:
-  - name: madlabsregistry
   containers:
   - name: potato
     image: things.madlabs.com.br:5000/potato:{{TAG}}
+  imagePullSecrets:
+  - name: madlabsregistry  
