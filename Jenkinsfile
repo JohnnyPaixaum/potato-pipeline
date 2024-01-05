@@ -27,7 +27,7 @@ pipeline {
                     script {
                         sh 'echo "Test Image Build"'                        
                         docker.withRegistry('https://things.madlabs.com.br:5000', 'Docker_Registry') {
-                            potato.app = docker.build("things.madlabs.com.br:5000/potato:v1", '-f ./src/Dockerfile ./src')
+                            docker.potato = docker.build("things.madlabs.com.br:5000/potato:v1", '-f ./src/Dockerfile ./src')
                         }
                     }
                 }
