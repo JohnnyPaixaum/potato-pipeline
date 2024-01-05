@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: potato-app
+  namespace: default
+spec:
+  containers:
+  - name: potato
+    image: things.madlabs.com.br:5000/potato:{{TAG}}
+  imagePullSecrets:
+  - name: madlabsregistry

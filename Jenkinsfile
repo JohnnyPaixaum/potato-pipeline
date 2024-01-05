@@ -44,15 +44,23 @@ pipeline {
                     }
                 }
             }
-
-            /*
-            stage('Kubernetes') {
+            
+            stage('Deploy') {
+                enviroment {
+                    tag_version = "${env.BUILD_ID}"
+                }
                 steps {
                     script {
-                        sh 'echo "Test Access"'
+                        sh 'echo "Test Deploy on Kubernetes"'
+                        withKubeConfig([credentialsId: 'kubeconfig']){
+                            sh 'se -i 's/{{TAG}}/$tag_version/g' ./k8s/deployment.yaml
+                            sh 'kubectl apply -f ./k8s/deployment.yaml'
+                        }
                     }           
                 }
             }
+
+            /*
             stage('DETECT SOURCE BRANCH ') {
                 steps {
                     script {
