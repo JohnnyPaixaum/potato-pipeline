@@ -29,8 +29,8 @@ pipeline {
                 steps {
                     script {
                         sh 'echo "Test Image Build"'                        
-                        docker.withRegistry('https://things.madlabs.com.br:5000', 'Docker_Registry') {
-                            potatoapp = docker.build("things.madlabs.com.br:5000/potato:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                        docker.withRegistry('egistry.madlabs.com.br', 'Docker_Registry') {
+                            potatoapp = docker.build("registry.madlabs.com.br/potato:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                         }
                     }
                 }
@@ -40,7 +40,7 @@ pipeline {
                 steps {
                     script {
                         sh 'echo "Test Image Push"'                        
-                        docker.withRegistry('https://things.madlabs.com.br:5000', 'Docker_Registry') {
+                        docker.withRegistry('egistry.madlabs.com.br', 'Docker_Registry') {
                             potatoapp.push('lastest')
                             potatoapp.push("${env.BUILD_ID}")
                         }
