@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: potato
-    image: things.madlabs.com.br:5000/potato:{{TAG}}
+    image: registry.madlabs.com.br/potato:{{TAG}}
   imagePullSecrets:
-  - name: madlabsregistry  
+  - name: madlabsregistry
