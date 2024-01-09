@@ -29,7 +29,7 @@ pipeline {
                 steps {
                     script {
                         sh 'echo "Test Image Build"'                        
-                        docker.withRegistry('registry.madlabs.com.br:443', 'Docker_Registry') {
+                        docker.withRegistry('registry.madlabs.com.br', 'Docker_Registry') {
                             potatoapp = docker.build("registry.madlabs.com.br/potato:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                         }
                     }
