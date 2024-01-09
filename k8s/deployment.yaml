@@ -8,4 +8,4 @@ spec:
   - name: potato
     image: registry.madlabs.com.br/potato:{{TAG}}
   imagePullSecrets:
-  - name: dockerregistry-credential
+  - name: madlabsregistry-credential
