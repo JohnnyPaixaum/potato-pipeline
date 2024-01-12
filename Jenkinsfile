@@ -58,6 +58,8 @@ pipeline {
                         sh 'echo "Test Deploy on Kubernetes"'
                         sh 'echo "DEBUG - BUILD_ID: $tag_version"'
                         sh 'echo "DEBUG - JOB_NAME: $job_name"'
+                        sh 'env'
+                        echo "${env.JOB_NAME}"
                         withKubeConfig([credentialsId: 'kubeconfig']){
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$job_name/g" ./k8s/deploy.yaml'
