@@ -13,7 +13,7 @@ metadata:
   name: {{PROJECT_NAME}}
   namespace: {{PROJECT_NAME}}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: {{PROJECT_NAME}}
@@ -30,6 +30,10 @@ spec:
       containers:
         - name: registry
           image: registry.madlabs.com.br/{{PROJECT_NAME}}:{{TAG}}
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "0.1"
         ports:
           - name: http
             containerPort: 80
