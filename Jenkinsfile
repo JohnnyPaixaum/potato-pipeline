@@ -66,10 +66,10 @@ pipeline {
             }
 
             stage('DETECT SOURCE BRANCH ') {
-                steps {
-                    environment {
+                environment {
                     git_branch = "${env.GIT_BRANCH}"
-                    }
+                }
+                steps {
                     sh 'echo "Teste de branch via SCM: $git_branch"'
                     script {
                         if ("$ref" == "refs/heads/main") {
