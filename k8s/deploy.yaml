@@ -30,13 +30,13 @@ spec:
       containers:
         - name: registry
           image: registry.madlabs.com.br/{{PROJECT_NAME}}:{{TAG}}
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "0.1"
-        ports:
-          - name: http
-            containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "0.1"
+          ports:
+            - name: http
+              containerPort: 80
       imagePullSecrets:
         - name: madlabsregistry-credential
 ---
