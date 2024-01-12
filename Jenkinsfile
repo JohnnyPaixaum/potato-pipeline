@@ -57,8 +57,8 @@ pipeline {
                     script {
                         sh 'echo "Test Deploy on Kubernetes"'
                         withKubeConfig([credentialsId: 'kubeconfig']){
-                            sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deployment.yaml'
-                            sh 'sed -i "s/{{PROJECT_NAME}}/$job_name/g" ./k8s/deployment.yaml'
+                            sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{PROJECT_NAME}}/$job_name/g" ./k8s/deploy.yaml'
                             sh 'kubectl apply -f ./k8s/deployment.yaml'
                         }
                     }

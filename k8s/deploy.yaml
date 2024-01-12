@@ -17,11 +17,11 @@ spec:
   selector:
     matchLabels:
       app: {{PROJECT_NAME}}
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
   template:
     metadata:
       labels:
