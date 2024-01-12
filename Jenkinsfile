@@ -56,6 +56,8 @@ pipeline {
                 steps {
                     script {
                         sh 'echo "Test Deploy on Kubernetes"'
+                        sh 'echo "DEBUG - BUILD_ID: $tag_version"'
+                        sh 'echo "DEBUG - JOB_NAME: $job_name"'
                         withKubeConfig([credentialsId: 'kubeconfig']){
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$job_name/g" ./k8s/deploy.yaml'
@@ -70,7 +72,7 @@ pipeline {
                     git_branch = "${env.GIT_BRANCH}"
                 }
                 steps {
-                    sh 'echo "Teste de branch via SCM: $git_branch"'
+                    sh 'echo "DEBUG - SCM_GIT_BRANCH: $git_branch"'
                     script {
                         if ("$ref" == "refs/heads/main") {
                             echo 'WEBHOOK COMING FROM BRANCH: MAIN'
