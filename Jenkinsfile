@@ -51,20 +51,26 @@ pipeline {
             stage('Deploy') {
                 environment {
                     tag_version = "${env.BUILD_ID}"
+                    job_name = "${env.JOB_NAME}"
                 }
                 steps {
                     script {
                         sh 'echo "Test Deploy on Kubernetes"'
                         withKubeConfig([credentialsId: 'kubeconfig']){
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deployment.yaml'
+                            sh 'sed -i "s/{{PROJECT_NAME}}/$job_name/g" ./k8s/deployment.yaml'
                             sh 'kubectl apply -f ./k8s/deployment.yaml'
                         }
-                    }           
+                    }
                 }
             }
 
             stage('DETECT SOURCE BRANCH ') {
                 steps {
+                    environment {
+                    git_branch = "${env.GIT_BRANCH}"
+                    }
+                    sh 'echo "Teste de branch via SCM: $git_branch"'
                     script {
                         if ("$ref" == "refs/heads/main") {
                             echo 'WEBHOOK COMING FROM BRANCH: MAIN'
@@ -73,9 +79,8 @@ pipeline {
                                 echo 'WEBHOOK COMING FROM BRANCH: DEV'                    
                            }
                         }
-                    }           
+                    }
                 }
             }
-        
     }
 }

@@ -1,11 +1,79 @@
 apiVersion: v1
-kind: Pod
+kind: Secret
 metadata:
-  name: potato-app
-  namespace: default
+  name: madlabsregistry-credential
+  namespace: {{PROJECT_NAME}}
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5tYWRsYWJzLmNvbS5iciI6IHsKCQkJImF1dGgiOiAiZFhObGNsOXlaV2RwYzNSeWVUcGxNMGdqUUNGZk4wMVBMa29zUTJNNGVsVXlNUzFqIgoJCX0KCX0KfQ== ### config.json in base64
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{PROJECT_NAME}}
+  namespace: {{PROJECT_NAME}}
 spec:
-  containers:
-  - name: potato
-    image: registry.madlabs.com.br/potato:{{TAG}}
-  imagePullSecrets:
-  - name: madlabsregistry-credential
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{PROJECT_NAME}}
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 2
+  template:
+    metadata:
+      labels:
+        app: {{PROJECT_NAME}}
+    spec:
+      containers:
+        - name: registry
+          image: registry.madlabs.com.br/{{PROJECT_NAME}}:{{TAG}}
+        ports:
+          - name: http
+            containerPort: 80
+      imagePullSecrets:
+        - name: madlabsregistry-credential
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{PROJECT_NAME}}
+  namespace: {{PROJECT_NAME}}
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app: {{PROJECT_NAME}}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{PROJECT_NAME}}-redirect-https
+  namespace: {{PROJECT_NAME}}
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{PROJECT_NAME}}
+  namespace: {{PROJECT_NAME}}
+spec:
+  tls:
+    secretName: "madlabs-com-br-tls"
+    domains:
+    - main: "madlabs.com.br"
+  routes:
+  - match: Host(`madlabs.com.br`) && (PathPrefix(`/{{PROJECT_NAME}}`) || PathPrefix(`/{{PROJECT_NAME}}/`))
+    kind: Rule
+    services:
+      - name: {{PROJECT_NAME}}
+        port: 80
+    middlewares:
+      - name: {{PROJECT_NAME}}-redirect-https
