@@ -30,7 +30,7 @@ pipeline {
                     script {
                         sh 'echo "Test Image Build"'                        
                         docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
-                            potatoapp = docker.build("registry.madlabs.com.br/potato:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                            potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                         }
                     }
                 }
