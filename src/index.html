@@ -9,18 +9,28 @@
             text-align: center;
             margin: 50px;
             font-family: Arial, sans-serif;
-        } h1 {
+            background-color: black; /* Adicionando background preto */
+            color: white; /* Definindo cor do texto para branco */
+        }
+        h1 {
             font-weight: bold;
             margin-top: 0;
-        } p {
+        }
+        p {
             margin-top: 20px;
-        } .video-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px; /* Ajustando o tamanho do texto */
+        }
+        .video-container {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 aspect ratio (h/w * 100) */
             margin-top: 20px;
             margin-bottom: 20px;
-        } .video-container iframe {
+        }
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -31,10 +41,10 @@
 </head>
 
 <body>
-    
     <div class="video-container">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/kXR0IwyM4Yw?start=1&autoplay=0&controls=0" frameborder="0" allowfullscreen></iframe>
     </div>
-
+    
+    <p>V:{{BRANCH}}-{{TAG_VERSION}}</p> <!-- Adicionando o texto no canto inferior direito -->
 </body>
 </html>
