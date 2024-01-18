@@ -10,6 +10,7 @@ pipeline {
         stage('Build Image') {
             environment {
                 proj_name = "${env.JOB_NAME}"
+                git_origin = "${env.GIT_BRANCH}"
             }
             steps {
                 script {
