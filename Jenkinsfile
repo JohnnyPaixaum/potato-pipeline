@@ -5,66 +5,120 @@ node {
 pipeline {
     agent any
     stages {
-            stage('Build Image') {
-                environment {
-                    proj_name = "${env.JOB_NAME}"
-                }
-                steps {
-                    script {
-                        sh 'echo "Test Image Build"'
-                        sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./src/Dockerfile'
-                        docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
-                            potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
-                        }
+
+        // INICIO DO BLOCO DO ESTAGIO DE BUILD
+        stage('Build Image') {
+            environment {
+                proj_name = "${env.JOB_NAME}"
+            }
+            steps {
+                script {
+                    sh 'echo "PREPER DOCKERFILE"'
+                    sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./src/Dockerfile'
+                    def BRANCH
+                    switch (git_origin) {
+                        case 'origin/main':
+                            BRANCH = 'main'
+                            echo 'BRANCH MAIN DETECT!'
+                                docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
+                                    potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                                }
+                            break
+                        case 'origin/homolog':
+                            BRANCH = 'homolog'
+                            echo 'BRANCH homolog DETECT!'
+                                docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
+                                    potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                                }
+                            break
+                        default:
+                            echo 'NO ORIGIN BRANCH DETECT!'
+                            exit 1
                     }
                 }
             }
+        }
+        // FIM DO BLOCO DO ESTAGIO DE BUILD
            
-            stage('Push Image') {
-                steps {
-                    script {
-                        sh 'echo "Test Image Push"'                        
-                        docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
-                            potatoapp.push('lastest')
-                            potatoapp.push("${env.BUILD_ID}")
-                        }
+        // INICIO DO BLOCO DO ESTAGIO DE PUSH
+        stage('Push Image') {
+            environment {
+                git_origin = "${env.GIT_BRANCH}"
+            }
+            steps {
+                script {
+                    switch (git_origin) {
+                        case 'origin/main':
+                            echo 'BRANCH MAIN DETECT!'                        
+                                docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
+                                potatoapp.push("latest")
+                                potatoapp.push("prod-${env.BUILD_ID}")
+                                }
+                            break
+                        case 'origin/homolog':
+                            echo 'BRANCH homolog DETECT!'
+                                docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
+                                potatoapp.push("homolog-${env.BUILD_ID}")
+                                }
+                            break
+                        default:
+                            echo 'NO ORIGIN BRANCH DETECT!'
+                            exit 1                                      
                     }
                 }
             }
+        }
+        // FIM DO BLOCO DO ESTAGIO DE PUSH
             
-            stage('Deploy') {
-                environment {
-                    tag_version = "${env.BUILD_ID}"
-                    proj_name = "${env.JOB_NAME}"
-                }
-                steps {
-                    script {
-                        sh 'echo "Test Deploy on Kubernetes"'
-                        withKubeConfig([credentialsId: 'kubeconfig']){
+        // INICIO DO BLOCO DO ESTAGIO DE DEPLOY
+        stage('Deploy') {
+            environment {
+                tag_version = "${env.BUILD_ID}"
+                proj_name = "${env.JOB_NAME}"
+                git_origin = "${env.GIT_BRANCH}"
+            }
+            steps {
+                script {
+                    // Analisa a Branch de Origem
+                    switch (git_origin) {
+                        // Caso a Branch de Origem seja main, será realizado as tarefas de acordo
+                        case 'origin/main':
+                            echo 'BRANCH MAIN DETECT!'
+                            // Prepara arquivo de manifesto para deploy
+                            sh 'sed -i "s/{{BRANCH}}/main/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{BRANCH}}/main/g" ./k8s/prod-IngressRoute.yaml'
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/deploy.yaml'
-                            sh 'kubectl apply -f ./k8s/deploy.yaml'
-                        }
+                            sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/prod-IngressRoute.yaml'
+                            // Realiza o deploy do arquivo de manifesto
+                            withKubeConfig([credentialsId: 'kubeconfig']){
+                                sh 'kubectl apply -f ./k8s/deploy.yaml'
+                                sh 'kubectl apply -f ./k8s/prod-IngressRoute.yaml'  
+                            }
+                            break
+                        // Caso a Branch de Origem seja homolog, será realizado as tarefas de acordo
+                        case 'origin/homolog':
+                            echo 'BRANCH homolog DETECT!'
+                            // Prepara arquivo de manifesto para deploy
+                            sh 'sed -i "s/{{BRANCH}}/homolog/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{BRANCH}}/homolog/g" ./k8s/homolog-IngressRoute.yaml'
+                            sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/homolog-IngressRoute.yaml'
+                            // Realiza o deploy do arquivo de manifesto
+                            withKubeConfig([credentialsId: 'kubeconfig']){
+                                sh 'kubectl apply -f ./k8s/deploy.yaml'
+                                sh 'kubectl apply -f ./k8s/homolog-IngressRoute.yaml'
+                            }
+                            break
+                        default:
+                            echo 'NO ORIGIN BRANCH DETECT!'
+                            exit 1
                     }
                 }
             }
+        }
+        // FIM DO BLOCO DO ESTAGIO DE DEPLOY
 
-            stage('DETECT SOURCE BRANCH ') {
-                environment {
-                    git_branch = "${env.GIT_BRANCH}"
-                }
-                steps {
-                    sh 'echo "DEBUG - SCM_GIT_BRANCH: $git_branch"'
-                    script {
-                        if ("$ref" == "refs/heads/main") {
-                            echo 'WEBHOOK COMING FROM BRANCH: MAIN'
-                        } else {
-                            if ("$ref" == "refs/heads/dev") {
-                                echo 'WEBHOOK COMING FROM BRANCH: DEV'                    
-                           }
-                        }
-                    }
-                }
-            }
     }
 }
