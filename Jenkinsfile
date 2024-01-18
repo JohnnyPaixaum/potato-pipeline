@@ -1,25 +1,5 @@
 node {
-    properties([
-        pipelineTriggers([
-        [$class: 'GenericTrigger',
-            genericVariables: [
-            [key: 'ref', value: '$.ref']
-            ],
-            causeString: 'Triggered on $ref',
-
-            token: '',
-            tokenCredentialId: 'Token_Webhook',
-
-            printContributedVariables: true,
-            printPostContent: true,
-
-            silentResponse: false,
-
-            regexpFilterText: '$ref',
-            regexpFilterExpression: '^refs/heads/(main|dev)$',
-            ]
-        ])
-    ])
+    properties([pipelineTriggers([githubPush()])])
 }
 
 pipeline {
