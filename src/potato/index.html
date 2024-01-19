@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POTATO</title>
     <link rel="icon" href="./img/potato.ico" type="image/x-icon">
 
-    <audio autoplay loop>
-        <source src="./audio/funkytown-low-quality.mp3" type="audio/mp3">
-    </audio>
-
     <style>
+
         body {
             text-align: center;
-            margin: 50px;
+            margin: 0;
             font-family: Arial, sans-serif;
+            height: 100vh; /* Para centralizar verticalmente */
+            flex-direction: column;
+            justify-content: center;
             background-color: black; /* Adicionando background preto */
             color: white; /* Definindo cor do texto para branco */
         } h1 {
@@ -30,29 +31,18 @@
             display: block;
             margin: 0 auto;
         } 
-        /* .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; // 16:9 aspect ratio (h/w * 100)
-            margin-top: 20px;
-            margin-bottom: 20px;
-        } */
-        /* .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        } */
+
     </style>
+
 </head>
 
-<body>
-    <!-- <div class="video-container">
-         <iframe id="ytplayer" type="text/html" width="auto" height="auto" src="https://www.youtube.com/embed/kXR0IwyM4Yw?start=0&autoplay=1&controls=0&showinfo=1&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe> 
-    </div> -->
+<body onload="document.getElementById('audio').play()">
     
-    <img src="./img/potato.gif" alt="potato">
+    <audio id="audio" autoplay loop>
+        <source src="./audio/funkytown-low-quality.mp3" type="audio/mp3">
+    </audio>
+
+    <img src="./img/potato.gif" alt="potato-spin">
 
     <p>V:{{BRANCH}}-{{TAG_VERSION}}</p> <!-- Adicionando o texto no canto inferior direito -->
     
