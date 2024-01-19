@@ -1,60 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+    <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POTATO</title>
-    <link rel="icon" href="./img/potato.ico" type="image/x-icon">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>POTATO</title>
+        <link rel="icon" href="./img/potato.ico" type="image/x-icon">
 
-    <style>
+        <style>
 
-        body {
-            text-align: center;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh; /* Para centralizar verticalmente */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-color: black; /* Adicionando background preto */
-            color: white; /* Definindo cor do texto para branco */
-        } h1 {
-            font-weight: bold;
-            margin-top: 0;
-        } p {
-            margin-top: 20px;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 10px; /* Ajustando o tamanho do texto */
-        } img {
-            display: block;
-            margin: 0 auto;
-        } 
+            body {
+                text-align: center;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                height: 100vh; /* Para centralizar verticalmente */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background-color: black; /* Adicionando background preto */
+                color: white; /* Definindo cor do texto para branco */
+            } footer {
+                font-family: Arial, sans-serif;
+                background-color: black; /* Adicionando background preto */
+                color: rgb(255, 255, 255); /* Definindo cor do texto para branco */
+            } p {
+                margin-top: 100%;
+                position: absolute;
+                bottom: 1px;
+                right: 5px;
+                font-size: 7px; /* Ajustando o tamanho do texto */
+            } img {
+                display: block;
+                margin: 0 auto;
+            } 
 
-    </style>
+        </style>
 
-</head>
+    </head>
 
-<body onclick="startAudio()">
-    
-    <audio id="audio" loop>
-        <source src="./audio/funkytown-low-quality.mp3" type="audio/mp3">
-    </audio>
+    <body onclick="startAudio()">
+        
+        <audio id="audio" loop>
+            <source src="./audio/funkytown-low-quality.mp3" type="audio/mp3">
+        </audio>
 
-    <img src="./img/potato.gif" alt="potato-spin">
+        <img src="./img/potato.gif" alt="potato-spin">
+        
+        <script>
+            function startAudio() {
+                var audio = document.getElementById('audio');
+                audio.play();
+                // Remover o evento de clique após a primeira interação
+                document.body.removeEventListener('click', startAudio);
+            }
+        </script>
 
-    <p>V:{{BRANCH}}-1.{{TAG_VERSION}}</p> <!-- Adicionando o texto no canto inferior direito -->
-    
-    <script>
-        function startAudio() {
-            var audio = document.getElementById('audio');
-            audio.play();
-            // Remover o evento de clique após a primeira interação
-            document.body.removeEventListener('click', startAudio);
-        }
-    </script>
+        <footer>
+            <p>Build:{{BRANCH}}-{{TAG_VERSION}}</p> <!-- Adicionando o texto no canto inferior direito -->
+        </footer>
 
-</body>
+    </body>
 </html>
