@@ -36,9 +36,9 @@
 
 </head>
 
-<body>
+<body onclick="startAudio()">
     
-    <audio autoplay loop>
+    <audio id="audio" loop>
         <source src="./audio/funkytown-low-quality.mp3" type="audio/mp3">
     </audio>
 
@@ -46,5 +46,14 @@
 
     <p>V:{{BRANCH}}-{{TAG_VERSION}}</p> <!-- Adicionando o texto no canto inferior direito -->
     
+    <script>
+        function startAudio() {
+            var audio = document.getElementById('audio');
+            audio.play();
+            // Remover o evento de clique após a primeira interação
+            document.body.removeEventListener('click', startAudio);
+        }
+    </script>
+
 </body>
 </html>
