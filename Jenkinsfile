@@ -53,18 +53,21 @@ pipeline {
             }
             steps {
                 script {
+                    def BRANCH
                     switch (git_origin) {
                         case 'origin/main':
+                            BRANCH = 'main'
                             echo 'BRANCH MAIN DETECT!'                        
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
                                 potatoapp.push("latest")
-                                potatoapp.push("prod-${env.BUILD_ID}")
+                                potatoapp.push("$BRANCH-${env.BUILD_ID}")
                                 }
                             break
                         case 'origin/homolog':
+                            BRANCH = 'homolog'
                             echo 'BRANCH homolog DETECT!'
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
-                                potatoapp.push("homolog-${env.BUILD_ID}")
+                                potatoapp.push("$BRANCH-${env.BUILD_ID}")
                                 }
                             break
                         default:
