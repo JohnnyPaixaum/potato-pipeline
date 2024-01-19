@@ -1,0 +1,28 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{PROJECT_NAME}}-redirect-https
+  namespace: {{BRANCH}}-{{PROJECT_NAME}}
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{PROJECT_NAME}}
+  namespace: {{BRANCH}}-{{PROJECT_NAME}}
+spec:
+  tls:
+    secretName: "homolog-madlabs-com-br-tls"
+    domains:
+    - main: "homolog.madlabs.com.br"
+  routes:
+  - match: Host(`homolog.madlabs.com.br`) && (PathPrefix(`/{{PROJECT_NAME}}`) || PathPrefix(`/{{PROJECT_NAME}}/`))
+    kind: Rule
+    services:
+    - name: {{PROJECT_NAME}}
+      port: 80
+    middlewares:
+    - name: {{PROJECT_NAME}}-redirect-https

@@ -10,15 +10,19 @@ pipeline {
         stage('Build Image') {
             environment {
                 proj_name = "${env.JOB_NAME}"
+                git_origin = "${env.GIT_BRANCH}"
+                tag_version = "${env.BUILD_ID}"
             }
             steps {
                 script {
-                    sh 'echo "PREPER DOCKERFILE"'
+                    // PREPARA ARQUIVO DO PROJETO
                     sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./src/Dockerfile'
                     def BRANCH
                     switch (git_origin) {
                         case 'origin/main':
                             BRANCH = 'main'
+                            sh 'sed -i "s/{{BRANCH}}/main/g" ./src/$proj_name/index.html'
+                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/$proj_name/index.html'
                             echo 'BRANCH MAIN DETECT!'
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
                                     potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
@@ -26,6 +30,8 @@ pipeline {
                             break
                         case 'origin/homolog':
                             BRANCH = 'homolog'
+                            sh 'sed -i "s/{{BRANCH}}/homolog/g" ./src/$proj_name/index.html'
+                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/$proj_name/index.html'
                             echo 'BRANCH homolog DETECT!'
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
                                     potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
