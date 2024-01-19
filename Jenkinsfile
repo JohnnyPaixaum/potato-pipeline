@@ -21,8 +21,8 @@ pipeline {
                     switch (git_origin) {
                         case 'origin/main':
                             BRANCH = 'main'
-                            sh 'sed -i "s/{{BRANCH}}/main/g" ./src/index.html'
-                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/index.html'
+                            sh 'sed -i "s/{{BRANCH}}/main/g" ./src/$proj_name/index.html'
+                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/$proj_name/index.html'
                             echo 'BRANCH MAIN DETECT!'
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
                                     potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
@@ -30,8 +30,8 @@ pipeline {
                             break
                         case 'origin/homolog':
                             BRANCH = 'homolog'
-                            sh 'sed -i "s/{{BRANCH}}/homolog/g" ./src/index.html'
-                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/index.html'
+                            sh 'sed -i "s/{{BRANCH}}/homolog/g" ./src/$proj_name/index.html'
+                            sh 'sed -i "s/{{TAG_VERSION}}/$tag_version/g" ./src/$proj_name/index.html'
                             echo 'BRANCH homolog DETECT!'
                                 docker.withRegistry('https://registry.madlabs.com.br', 'Docker_Registry') {
                                     potatoapp = docker.build("registry.madlabs.com.br/${env.JOB_NAME}:$BRANCH-${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
