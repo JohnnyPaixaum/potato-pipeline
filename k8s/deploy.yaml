@@ -18,7 +18,6 @@ metadata:
   name: {{PROJECT_NAME}}
   namespace: {{BRANCH}}-{{PROJECT_NAME}}
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: {{PROJECT_NAME}}
@@ -26,7 +25,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 2
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -38,6 +37,9 @@ spec:
           resources:
             limits:
               memory: "128Mi"
+              cpu: "0.2"
+            requests:
+              memory: "64Mi"
               cpu: "0.1"
           ports:
             - name: http
@@ -57,3 +59,23 @@ spec:
       targetPort: http
   selector:
     app: {{PROJECT_NAME}}
+---
+apiVersion: autoscaling/v2
+Kind: HorizontalPodAutoScaler
+metadata:
+  name: {{PROJECT_NAME}}
+  namespace: {{BRANCH}}-{{PROJECT_NAME}}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{PROJECT_NAME}}
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target: 
+        type: Utilization
+        averageUtilization: 80
