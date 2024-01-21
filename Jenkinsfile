@@ -108,11 +108,13 @@ pipeline {
                             echo 'BRANCH MAIN DETECT!'
                             // Prepara arquivo de manifesto para deploy
                             sh 'sed -i "s/{{BRANCH}}/main/g" ./k8s/deploy.yaml'
-                            sh 'sed -i "s/{{BRANCH}}/main/g" ./k8s/prod-IngressRoute.yaml'
-                            sh 'sed -i "s/{{dockerconfigjson}}/$dockerconfigjson/g" ./k8s/deploy.yaml'
+                            sh 'sed -i "s/{{BRANCH}}/main/g" ./k8s/prod-IngressRoute.yaml'                            
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/prod-IngressRoute.yaml'
+                            withCredentials([string(credentialsId: 'Registry-config-json', variable: 'DOCKER_CONFIG_JSON')]) {
+                                sh 'sed -i "s/{{dockerconfigjson}}/$DOCKER_CONFIG_JSON/g" ./k8s/deploy.yaml'
+                            }
                             // Realiza o deploy do arquivo de manifesto
                             withKubeConfig([credentialsId: 'kubeconfig']){
                                 sh 'kubectl apply -f ./k8s/deploy.yaml'
@@ -128,6 +130,9 @@ pipeline {
                             sh 'sed -i "s/{{TAG}}/$tag_version/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/deploy.yaml'
                             sh 'sed -i "s/{{PROJECT_NAME}}/$proj_name/g" ./k8s/homolog-IngressRoute.yaml'
+                            withCredentials([string(credentialsId: 'Registry-config-json', variable: 'DOCKER_CONFIG_JSON')]) {
+                                sh 'sed -i "s/{{dockerconfigjson}}/$DOCKER_CONFIG_JSON/g" ./k8s/deploy.yaml'
+                            }
                             // Realiza o deploy do arquivo de manifesto
                             withKubeConfig([credentialsId: 'kubeconfig']){
                                 sh 'kubectl apply -f ./k8s/deploy.yaml'
