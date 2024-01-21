@@ -4,46 +4,47 @@
 <img src="/.assets/jenkins_logo_icon.png" alt="Jenkins" width="200px" height="200px">
 <img src="/.assets/cert-manager-logo-icon.png" alt="Cert Manager" width="200px" height="200px">
 <img src="/.assets/kubernetes_logo_icon.png" alt="Kubernetes" width="200px" height="200px">
-<img src="/.assets/traefik_logo_icon.png" alt="Traefik" width="250px" height="200px">
+<img src="/.assets/traefik_logo_icon.png" alt="Traefik" width="200px" height="200px">
 </div>
-
 
 ### Caracteristicas:
 
-1. Jenkinsfile é gerenciado pelo GitHub via CSM.
-2. Configurado o [GitHub hook trigger for GITScm polling](https://plugins.jenkins.io/github/), proporcionando a execução de um Job via Webhook que é acionado após cada Push Event no GitHub.
-3. Com intuito de simular um ambiente de produção e outro de homologação, dependendo da branch em que é gerado o push o Jenkins irá realizar uma ação compativel com o a branch em questão, contudo, isso está sendo feito dentro do Jenkinsfile atraves de Swith case pela função Script ao invez de utilizar os projetos do tipo Muilti-Branch(No futuro proximo estudo isso).
-4. A diferença entre os ambientes é apenas o dominio, certificado SSL e a tag das docker images além dos nomes de alguns componentes dentro do Kubernetes como o Namespace.
+1. Jenkinsfile é gerenciado pelo GitHub via [CSM](https://plugins.jenkins.io/github/).
+2. [GitHub hook trigger for GITScm polling](https://plugins.jenkins.io/github/) ativo, assim proporcionando a execução automatica de um Job via Webhook que é acionado após cada Push Event no GitHub.
+3. Com intuito de simular um ambiente de produção e outro de homologação, dependendo da branch em que é gerado o Push o Jenkins irá realizar uma ação compativel com o a Branch em questão, contudo, isso não está sendo feito por um projeto do tipo Muilti-Branch(No futuro proximo estudo isso).
+4. A diferença entre os ambientes é simbolico, apenas o dominio, certificado SSL, as TAGs das Docker Images, além dos nomes de alguns componentes dentro do Kubernetes como o Namespace, pois, o intuito é apenas simulador.
 
-### Stagios:
+### Stagios da Pipeline:
 
 #### 1. Build
 
-Atraves dos pluguins [Docker Pipeline](https://plugins.jenkins.io/docker-workflow/) e [Docker Plugin](https://plugins.jenkins.io/docker-plugin/), é feito o build de uma docker image, onde levará os arquivos da app.
+Atraves dos pluguins [Docker Pipeline](https://plugins.jenkins.io/docker-workflow/) e [Docker Plugin](https://plugins.jenkins.io/docker-plugin/), é feito o build de uma docker image, onde levará os arquivos da aplicação.
 
-> A Image receberá uma TAG que corresponda a branch e a fim de ter o minimo de versionamento é usado o ID da Build, assim ficando, registry.addr/project_name:branch-id_build.
+> A Image receberá uma TAG que corresporá a branch, a fim de simular/representar um versionamento é usado o ID da Build nas tags, assim ficando, registry.addr/project_name:branch_name-id_build.
 
 #### 2. Push
 
-Ainda pela a utilização dos pluguins mencionados anteriormente será feito um push da docker image criada do estagio anterior para um repositorio remoto.
+Ainda pela a utilização dos pluguins mencionados anteriormente será feito um PUSH da Image Buildada no estagio anterior para um repositorio remoto.
 
-> Essa image será enviado para um [Registry Privado](https://hub.docker.com/_/registry) que subi em meu Cluster Kubernetes.
+> O Repositorio Remoto se trata de um [Registry Privado](https://hub.docker.com/_/registry) que subi em meu Cluster Kubernetes.
 
 #### 3. Deploy
 
-Atravez dos pluguins [Kubernetes CLI]([https://plugins.jenkins.io/kubernetes-cli/) e [Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) será aplicado os arquivos de manifesto kubernetes com todos os componentes necessarios para que o projeto rode adequadamente em meu Cluster Kubernetes.
+Atravez dos pluguins [Kubernetes CLI]([https://plugins.jenkins.io/kubernetes-cli/) e [Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) será aplicado os arquivos de manifesto kubernetes com todos os recursos necessarios para que o projeto rode adequadamente em meu Cluster Kubernetes.
 
-- Componentes
-1. Criação Namespace para o app com uma nomeclatura que diz a qual ambiantes pertece e o nome do app, branch-app.
-2. Criação da secret que dará acesso do kubernetes realizar Pull de images do Registry Privado.
-3. Criação/Modificação do Deployment.
-4. Criação/Modificação da Service.
-5. Criação/Modificação de um Middleware configurado para realizar o direcionamento de HTTP para HTTPS.
-6. Criação/Modificação de um IngressRoute que dará acesso a service a partir Ingress Controller.
+- Recursos:
+
+1. Namespace, com uma nomenclatura que ajuda a saber a qual dos ambientes de Prod ou Homolog e a qual aplicação pertence o recurso.
+2. Secret, dará acesso ao kubernetes realizar Pull de images do Registry Privado.
+3. Deployment.
+4. Service.
+5. Horizontal Pod Autoscaler.
+6. Middleware, Configurado para realizar o direcionamento de HTTP para HTTPS.
+7. IngressRoute, Dará acesso a service atravez do Ingress Controller.
 
 ### A App:
 
-Como o intuito desse projeto é o estudo de Pipelines no Jenkins a app foi criada com o intuito de simbolizar a entrega continua de algo mais complexo, logo, não tinha motivos para elaborar uma app mais complexa.
+Como o intuito desse projeto é o estudo de Pipelines e Jenkins a App abordada nesse projeto foi criada apenas com o intuito de simbolizar uma entrega continua de uma aplicação Web, logo, é uma simples pagina criada a partir em HTML.
 
 ### Ha ação:
 
