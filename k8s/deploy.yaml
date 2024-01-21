@@ -61,7 +61,7 @@ spec:
     app: {{PROJECT_NAME}}
 ---
 apiVersion: autoscaling/v2
-Kind: HorizontalPodAutoscaler
+kind: HorizontalPodAutoscaler
 metadata:
   name: {{PROJECT_NAME}}
   namespace: {{BRANCH}}-{{PROJECT_NAME}}
