@@ -10,7 +10,7 @@ metadata:
   namespace: {{BRANCH}}-{{PROJECT_NAME}}
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5tYWRsYWJzLmNvbS5iciI6IHsKCQkJImF1dGgiOiAiZFhObGNsOXlaV2RwYzNSeWVUcGxNMGdqUUNGZk4wMVBMa29zUTJNNGVsVXlNUzFqIgoJCX0KCX0KfQ== ### config.json in base64
+  .dockerconfigjson: {{dockerconfigjson}} ### config.json in base64
 ---
 apiVersion: apps/v1
 kind: Deployment
