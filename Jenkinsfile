@@ -88,6 +88,12 @@ pipeline {
             }
             steps {
                 script {
+                    
+                    // GET GIT COMMIT MESSAGE
+                    env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
+                    // APPROVER TO DEPLOY
+                    input id: 'Deploy', message: "You Allow To Deploy?\nBranch: \"${env.GIT_BRANCH}\"\nCommit: \"${env.GIT_COMMIT_MSG}\"", submitter: 'admin'
+
                     // Analisa a Branch de Origem
                     switch (git_origin) {
                         // Caso a Branch de Origem seja main, será realizado as tarefas de acordo
