@@ -33,13 +33,13 @@ Ainda pela a utilização dos pluguins mencionados anteriormente será feito um 
 
 Atravez dos pluguins [Kubernetes CLI]([https://plugins.jenkins.io/kubernetes-cli/) e [Kubernetes Plugin](https://plugins.jenkins.io/kubernetes/) será aplicado os arquivos de manifesto kubernetes com todos os componentes necessarios para que o projeto rode adequadamente em meu Cluster Kubernetes.
 
-> - Componentes
->>1. Criação Namespace para o app com uma nomeclatura que diz a qual ambiantes pertece e o nome do app, branch-app.
->>2. Criação da secret que dará acesso ao Registry.
->>3. Criação/Modificação do Deployment.
->>4. Criação/Modificação da Service.
->>5. Criação/Modificação de um Middleware configurado para realizar o direcionamento de HTTP para HTTPS.
->>6. Criação/Modificação de um IngressRoute que dará acesso a service a partir Ingress Controller.
+- Componentes
+1. Criação Namespace para o app com uma nomeclatura que diz a qual ambiantes pertece e o nome do app, branch-app.
+2. Criação da secret que dará acesso do kubernetes realizar Pull de images do Registry Privado.
+3. Criação/Modificação do Deployment.
+4. Criação/Modificação da Service.
+5. Criação/Modificação de um Middleware configurado para realizar o direcionamento de HTTP para HTTPS.
+6. Criação/Modificação de um IngressRoute que dará acesso a service a partir Ingress Controller.
 
 ### A App:
 
