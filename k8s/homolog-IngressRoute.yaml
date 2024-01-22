@@ -22,7 +22,7 @@ spec:
   - match: Host(`homolog.madlabs.com.br`) && (PathPrefix(`/{{PROJECT_NAME}}`) || PathPrefix(`/{{PROJECT_NAME}}/`))
     kind: Rule
     services:
-    - name: {{PROJECT_NAME}}
-      port: 80
+      - name: {{PROJECT_NAME}}
+        port: 80
     middlewares:
-    - name: {{PROJECT_NAME}}-redirect-https
+      - name: {{PROJECT_NAME}}-redirect-https
