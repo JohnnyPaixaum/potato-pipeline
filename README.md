@@ -55,7 +55,7 @@ Como o intuito desse projeto é o estudo de Pipelines e Jenkins a App abordada n
 
 ### Demonstração:
 
-![demo](.assets/pipeline_demo.mkv)
+![demo](.assets/pipeline_demo.mp4)
 
 - Descrevendo passos realizados:
 
