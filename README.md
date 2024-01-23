@@ -5,6 +5,7 @@
 <img src="/assets/cert-manager-logo-icon.png" alt="Cert Manager" width="200px" height="200px">
 <img src="/assets/kubernetes_logo_icon.png" alt="Kubernetes" width="200px" height="200px">
 <img src="/assets/traefik_logo_icon.png" alt="Traefik" width="200px" height="200px">
+<img src="/assets/oci_logo_ico.png" alt="OCI" width="200px" height="200px">
 </div>
 
 Esse projeto foi com o intuito de demonstrar meus estudos envolvendo Pipelines e Jenkins.
