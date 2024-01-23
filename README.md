@@ -55,7 +55,7 @@ Como o intuito desse projeto é o estudo de Pipelines e Jenkins a App abordada n
 
 ### Demonstração:
 
-https://github.com/JohnnyPaixaum/potato-pipeline/assets/pipeline_demo.mp4
+https://github.com/JohnnyPaixaum/potato-pipeline/assets/34694531/4ed37b9a-e780-4577-af2b-73360c9b018d
 
 - Descrevendo passos realizados:
 
