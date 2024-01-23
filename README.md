@@ -55,3 +55,13 @@ Como o intuito desse projeto é o estudo de Pipelines e Jenkins a App abordada n
 
 ### Demonstração:
 
+![demo](.assets/pipeline_demo.mp4)
+
+- Descrevendo passos realizados:
+
+1. Editado o arquivo da Aplicação.
+2. Realizado o git commit e push.
+3. Demonstrado o inicio automatico do job no Jenkins.
+4. Demonstrado a aprovação para incio da etapa de Deploy, contendo na menssagem a Branch de origem e a descrição do Commit.
+5. Demonstrado criação dos Pods com a nova versão subindo e substituindo os atuais.
+6. Mostrado mudança da aplicação no navegador após todo o processo realizado pela Pipeline.
