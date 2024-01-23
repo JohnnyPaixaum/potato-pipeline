@@ -1,10 +1,10 @@
 # Minha Primeira Pipeline Utilizando o Jenkins
 
 <div style="display: flex; justify-content: space-between;">
-<img src="/.assets/jenkins_logo_icon.png" alt="Jenkins" width="200px" height="200px">
-<img src="/.assets/cert-manager-logo-icon.png" alt="Cert Manager" width="200px" height="200px">
-<img src="/.assets/kubernetes_logo_icon.png" alt="Kubernetes" width="200px" height="200px">
-<img src="/.assets/traefik_logo_icon.png" alt="Traefik" width="200px" height="200px">
+<img src="/assets/jenkins_logo_icon.png" alt="Jenkins" width="200px" height="200px">
+<img src="/assets/cert-manager-logo-icon.png" alt="Cert Manager" width="200px" height="200px">
+<img src="/assets/kubernetes_logo_icon.png" alt="Kubernetes" width="200px" height="200px">
+<img src="/assets/traefik_logo_icon.png" alt="Traefik" width="200px" height="200px">
 </div>
 
 Esse projeto foi com o intuito de demonstrar meus estudos envolvendo Pipelines e Jenkins.
@@ -55,7 +55,7 @@ Como o intuito desse projeto é o estudo de Pipelines e Jenkins a App abordada n
 
 ### Demonstração:
 
-![demo](.assets/pipeline_demo.mp4)
+https://github.com/JohnnyPaixaum/potato-pipeline/assets/pipeline_demo.mp4
 
 - Descrevendo passos realizados:
 
