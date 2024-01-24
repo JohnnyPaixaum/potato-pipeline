@@ -47,8 +47,7 @@ Atravez dos pluguins [Kubernetes CLI]([https://plugins.jenkins.io/kubernetes-cli
 6. Middleware, Configurado para realizar o redirecionamento de HTTP para HTTPS.
 7. IngressRoute, Dará acesso a Service através do Ingress Controller.
 
-Com todos esses recursos aplicados a aplicação de demonstração estará disponivel a partir [daqui](https://madlabs.com.br/potato) em um ambiente Kuberentes hospedado da OCI, contato com o Traefik como Ingress Controller a fim de realizar o balanceamento das requisições, HTTPS via Let's Encrypt, regra de Rolling Update a fim de evitar indisponibilidades quando a Image for atualizada e um HPA configurado com a finalidade de estudar a escalabilidade Horizontal no Kubernetes
-
+Com todos esses recursos aplicados, a aplicação de demonstração estará disponível a partir partir [daqui](https://madlabs.com.br/potato) em um ambiente Kubernetes hospedado da OCI, contando com o Traefik como Ingress Controller a fim de realizar o balanceamento das requisições entre os Pods, HTTPS via Let's Encrypt gerenciado pelo Cert-Manager, regra de Rolling Update a fim de evitar indisponibilidades quando a Image for atualizada e um HPA configurado com a finalidade de estudar a escalabilidade Horizontal de Pods no Kubernetes
 
 ### A Web App:
 
