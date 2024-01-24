@@ -1,11 +1,11 @@
 # Minha Primeira Pipeline Utilizando o Jenkins
 
 <div style="display: flex; justify-content: center;">
-<img src="/assets/jenkins_logo_icon.png" alt="Jenkins" width="150px" height="150px">
-<img src="/assets/cert-manager-logo-icon.png" alt="Cert Manager" width="150px" height="150px">
-<img src="/assets/kubernetes_logo_icon.png" alt="Kubernetes" width="150px" height="150px">
-<img src="/assets/traefik_logo_icon.png" alt="Traefik" width="150px" height="150px">
-<img src="/assets/oci_logo_ico.png" alt="OCI" width="250px" height="150px">
+<img src="/assets/jenkins_logo_icon.png" alt="Jenkins" width="100px" height="100px">
+<img src="/assets/cert-manager-logo-icon.png" alt="Cert Manager" width="100px" height="100px">
+<img src="/assets/kubernetes_logo_icon.png" alt="Kubernetes" width="100px" height="100px">
+<img src="/assets/traefik_logo_icon.png" alt="Traefik" width="100px" height="100px">
+<img src="/assets/oci_logo_ico.png" alt="OCI" width="150px" height="100px">
 </div>
 
 Esse repositório foi feito com o intuito de demonstrar meus estudos envolvendo Pipelines Jenkins e Kubernetes.
