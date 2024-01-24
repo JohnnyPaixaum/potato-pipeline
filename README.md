@@ -6,7 +6,6 @@
 <img src="/assets/kubernetes_logo_icon.png" alt="Kubernetes" width="170px" height="170px">
 <img src="/assets/traefik_logo_icon.png" alt="Traefik" width="170px" height="170px">
 <img src="/assets/oci_logo_ico.png" alt="OCI" width="270px" height="170px">
-<img src="/assets/dockerregistry_logo-ico.png" alt="Docker Registry" width="270px" height="170px">
 </div>
 
 Esse repositório foi feito com o intuito de demonstrar meus estudos envolvendo Pipelines Jenkins e Kubernetes.
@@ -51,7 +50,7 @@ Atravez dos pluguins [Kubernetes CLI]([https://plugins.jenkins.io/kubernetes-cli
 Com todos esses recursos aplicados a aplicação de demonstração estará disponivel a partir [daqui](https://madlabs.com.br/potato) em um ambiente Kuberentes hospedado da OCI, contato com o Traefik como Ingress Controller a fim de realizar o balanceamento das requisições, HTTPS via Let's Encrypt, regra de Rolling Update a fim de evitar indisponibilidades quando a Image for atualizada e um HPA configurado com a finalidade de estudar a escalabilidade Horizontal no Kubernetes
 
 
-### A App:
+### A Web App:
 
 Como o intuito deste projeto é o estudo de Pipelines e Jenkins a App abordada neste projeto foi criada apenas com o intuito de simbolizar uma entrega contínua de uma aplicação Web, logo, é uma simples página criada a partir em HTML.
 
