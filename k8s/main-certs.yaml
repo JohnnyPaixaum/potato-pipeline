@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-madlabs-com-br
+  namespace: {{BRANCH}}-{{PROJECT_NAME}}
+spec:
+  dnsNames:
+    - "madlabs.com.br"
+  secretName: madlabs-com-br-tls
+  issuerRef:
+    name: letsencrypt-cert-manager
+    kind: ClusterIssuer
