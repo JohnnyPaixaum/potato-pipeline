@@ -8,5 +8,5 @@ spec:
     - "homolog.madlabs.com.br"
   secretName: homolog-madlabs-com-br-tls
   issuerRef:
-    name: letsencrypt-cert-manager
+    name: staging-letsencrypt-cert-manager
     kind: ClusterIssuer
